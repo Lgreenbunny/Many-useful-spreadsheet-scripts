@@ -1,26 +1,42 @@
-/* inside the raw entry recipes
-given a list of names + a list of values inside recipeTally, it puts the 
-  correct values to the right of the recipe names inside the raw entries
-  it looks for exact matches
-  this function will be put on each 4th column with each group of 5 columns near the top with the header
- */
-const recipeNumbers = new Map();
-function recipeSetter(range, twoColInput) {
-  //load twoColInput into the map
-  for(var i = 0; i < twoColInput.length; i++){
-    if(twoColInput[i][0] != "")
-    recipeNumbers.set(twoColInput[i][0], twoColInput[i][1]);
-  }
+/*async function starterTest(){
+  return await recipeStarter(
+    [
+      ["test1", "3", "egg", "fish; 3", "egg; 1", "tree; 2"],
+      ["test2", "3", "egg", "fish; 4", "egg; 2", "tree; 3"],
+      ["test3", "3", "egg", "fish; 5", "egg; 3", "tree; 4"],
+      ["test4", "3", "egg", "fish; 6", "egg; 4", "tree; 5"]
+    ]    
+  );
+}*/
 
-  const result = [];
-  //going down range, check the first row for names
-  for(var i = 0; i < range.length; i++){
-    var temp = recipeNumbers.get(range[i][0]);
+async function onOpen(e){
+  await recipeStarter();
+}
 
-    //if there's nothing there or no match, push a blank "" into the results col
-    //otherwise, push the number value found in the map for the recipe name found
-    result.push(temp === undefined? [""] : [temp]) ;
-  }
+//later on, this should run on open and use Range objects to pull values from
+//posts all recipes of a given game into the crafting tally sheet (with yield given and notes, not ingredients)
+//should delete the entire crafting tally list and start printing from blank cells whenever it starts being edited
+const tally = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally");
+async function recipeStarter() {//rename to sheetRange later
+  //clear the entries in crafting tally
+  tally.getRange("a2:d").clearContent();
+  const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("stardew").getRange("a2:C").getValues();
 
-  return result;
+  return new Promise((resolve)=>{
+    //for each filled recipe entry, print to console for now
+    const result = [];
+    for(var i = 0; i < sheetArr.length; i++){
+      if(sheetArr[i][0] != ""){
+        result.push(sheetArr[i]);//if i put in "length", it'll stop at the actual end index
+      }
+    }
+
+    tally.getRange(`a2:c${result.length+1}`).setValues(result);
+    console.log(`result:
+    ${result}
+    range:
+    a2:c${result.length+1}`);
+    resolve("success");
+  });
+  
 }
