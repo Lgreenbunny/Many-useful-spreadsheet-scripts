@@ -19,24 +19,9 @@ async function onOpen(e){
 const tally = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally");
 async function recipeStarter() {//rename to sheetRange later
   //clear the entries in crafting tally
-  tally.getRange("a2:d").clearContent();
+  tally.getRange("a2:C").clearContent();
   const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("stardew").getRange("a2:C").getValues();
 
-  return new Promise((resolve)=>{
-    //for each filled recipe entry, print to console for now
-    const result = [];
-    for(var i = 0; i < sheetArr.length; i++){
-      if(sheetArr[i][0] != ""){
-        result.push(sheetArr[i]);//if i put in "length", it'll stop at the actual end index
-      }
-    }
-
-    tally.getRange(`a2:c${result.length+1}`).setValues(result);
-    console.log(`result:
-    ${result}
-    range:
-    a2:c${result.length+1}`);
-    resolve("success");
-  });
-  
+  //for each filled recipe entry in sheetArr, push/copy to tally's B2:D row
+  return await rangeTransfer(tally, "B2:D", sheetArr);
 }
