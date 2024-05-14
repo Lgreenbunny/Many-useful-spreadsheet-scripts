@@ -35,18 +35,24 @@ async function recipeManager() {//2d arr for testing
       //should be divided by a "; "
       if(ingredients[j] != "" && ingredients[j+1] != ""){
         result[i].push(`${ingredients[j]}; ${ingredients[j+1]}`);
-        tempWidth++;
       }
     }
   }
   //after the loops are done, log the range into the game's sheet (stardew for now)
-  //find the last index that doesn't have an entry inside, then send the results to rangeStarter, then rangeTransfer
+  //find the last index that doesn't have an entry inside, then send the results to rangeStarter, then copy to the range starting from there
    var firstEmptyLine = 0;
-  for(var firstEmptyLine; firstEmptyLine < destinationArr.length; firstEmptyLine++){
+   //looking at the first row of the destinationEntrySheet's values, check for blanks
+   const destinationArr = destinationEntrySheet.getRange("A:A").getValues();
+  for(var firstEmptyLine; firstEmptyLine < result.length; firstEmptyLine++){
     if(destinationArr[firstEmptyLine][0] == "")
       break;
   }
+  //if it sees an index that's blank at index 3, that would be row 4
+  firstEmptyLine++;
   
+  //console.log(`firstEmptyLine: ${firstEmptyLine}
+  //result:`);
+  //console.log(result);
   const coords = await rangeStarter("A", firstEmptyLine, result);
   await rangeTransfer(destinationEntrySheet, coords, result); 
   /*return new Promise((resolve)=>{

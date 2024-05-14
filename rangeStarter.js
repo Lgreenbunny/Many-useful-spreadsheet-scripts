@@ -11,12 +11,29 @@
 
 //finds the column bounds for a given array & a starting cell, from A-Z only
 function rangeStarter(startColChar, rowStart, arr) {
+  console.log("rangeStarter arr");
+  //console.log(arr);
   return new Promise((resolve)=>{
     //find the widest part of the array, initialize at 0 so it doesn't use part of the array at first
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
     const colEnd = arr.reduce( //colEnd = width
       (theMax, theRow)=> Math.max(theMax, theRow.length), 0
     );
+    console.log(`rangeStarter max width: ${colEnd}`);
+    
+    //setValues() WILL NOT WORK if the array's jagged/not uniform, which is what rangeTransfer will use
+    //add blanks to the ends of the array if they arrays aren't uniform, up until they're at the colEnd's amount
+    for(var i = 0; i < arr.length; i++){
+      //if length < colEnd, spread a new array of blanks with enough spaces, and push that into the array
+      var amount = colEnd - arr[i].length;
+      if(amount > 0){
+        var tempFill = new Array(amount).fill("");
+        arr[i].push(...tempFill);
+      }
+    }
+    console.log("arr after filling with blanks for uniformity...")
+    console.log(arr);
+
 
     //https://stackoverflow.com/a/12504061
     /*first compare the char to the char a, then turn that into the column number
