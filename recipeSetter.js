@@ -1,26 +1,24 @@
-/* inside the raw entry recipes
-given a list of names + a list of values inside recipeTally, it puts the 
-  correct values to the right of the recipe names inside the raw entries
-  it looks for exact matches
-  this function will be put on each 4th column with each group of 5 columns near the top with the header
- */
-const recipeNumbers = new Map();
-function recipeSetter(range, twoColInput) {
-  //load twoColInput into the map
-  for(var i = 0; i < twoColInput.length; i++){
-    if(twoColInput[i][0] != "")
-    recipeNumbers.set(twoColInput[i][0], twoColInput[i][1]);
-  }
-
-  const result = [];
-  //going down range, check the first row for names
-  for(var i = 0; i < range.length; i++){
-    var temp = recipeNumbers.get(range[i][0]);
-
-    //if there's nothing there or no match, push a blank "" into the results col
-    //otherwise, push the number value found in the map for the recipe name found
-    result.push(temp === undefined? [""] : [temp]) ;
-  }
-
-  return result;
+function recipeSetter(arr){//2d arr, see doc for recipeTally struct
+//col A:C don't need to be filled, you can just filter out the blanks from craftingTally
+  return new Promise((resolve) => {
+    const result = {left: [], right:[]};
+    /* make 2 array, one with final ingredients and the other with "broken down"/raw ingredients
+      (switch to filling in the 2nd array whenever the forst cell in the row matches "broken down")
+    */
+    var left = true; 
+    for(var i = 1; i < arr.length; i++){
+      if(arr[i][0].includes("broken down") || arr[i][0] == ""){
+        left = false;
+        continue; // don't put "broken down" in the results
+      }
+      
+      if(left)
+        result.left.push(arr[i]);
+      else
+        result.right.push(arr[i]);
+    }
+    console.log("result of recipeSetter/column formatting:");
+    console.log(result);
+    resolve(result);
+  });
 }
