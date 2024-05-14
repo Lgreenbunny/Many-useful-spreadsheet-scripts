@@ -56,18 +56,22 @@ async function recipeGetter() {//2d arr for debugging, add arg "range"
   console.log("result of recipeGetter:");
   console.log(result);
 
+  //move the user to the right spreadsheet and range
+  var tallyRes = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("tally results");
+  tallyRes.setActiveSelection("A1");
+
+  //send data to the other parts of the script
   return await recipeTally(result)
     .then((e)=>recipeSetter(e))
     .then((e)=> {
-      rangeTransfer(
-        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("tally results"),
-        "D2:E", e.left);
-      rangeTransfer(
-        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("tally results"),
-        "H2:I", e.right);
-      
-      return ("success");
+      rangeTransfer(tallyRes,"D2:E", e.left);
+      rangeTransfer(tallyRes,"H2:I", e.right);
   });
+}
+
+function backToTally(){
+  SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally")
+    .setActiveSelection("A1");
 }
     //res(result); 
   //});
