@@ -60,13 +60,19 @@ async function recipeGetter() {//2d arr for debugging, add arg "range"
   var tallyRes = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("tally results");
   tallyRes.setActiveSelection("A1");
 
-  //send data to the other parts of the script
-  return await recipeTally(result)
-    .then((e)=>recipeSetter(e))
-    .then((e)=> {
-      rangeTransfer(tallyRes,"D2:E", e.left);
-      rangeTransfer(tallyRes,"H2:I", e.right);
-  });
+  //send data to setter for formatting
+  const setterResult = await recipeTally(result)
+    .then((e)=>recipeSetter(e));
+  
+  //calculating dimensions before transferring
+  const leftFinal = await rangeStarter("D", 2, setterResult.left);
+  const rightFinal = await rangeStarter("H", 2, setterResult.right);
+
+  //transferring
+  await rangeTransfer(tallyRes, leftFinal, setterResult.left);
+  await rangeTransfer(tallyRes, rightFinal, setterResult.right);
+
+  return ("Finished recipeGetter/crafting!");
 }
 
 function backToTally(){

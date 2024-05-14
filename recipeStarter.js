@@ -43,11 +43,14 @@ async function starterTest(){
     for(var i = 0; i < condensedSheetCol.length; i++)
       resultArr.push([...sheetArr[i], condensedSheetCol[i][0]]);
     
-    console.log(`result arr after combining the ingredient rows, then combining that arr with sheetArr:
-    ${resultArr}`);
+    /*console.log(`result arr after combining the ingredient rows, then combining that arr with sheetArr:`);
+    console.log(resultArr)*/
   
     //for each filled recipe entry in the result, push/copy to tally's B2:D row
-    return await rangeTransfer(tally, tallyRangeStr, resultArr);
+    const coords = await rangeStarter("B", 2, resultArr);
+    console.log("rangeStarter result while in recipeStarter:");
+    console.log(coords);
+    return await rangeTransfer(tally, coords, resultArr);
   }
   
   //condense the ingredients from D:Z then put in the 4th col
