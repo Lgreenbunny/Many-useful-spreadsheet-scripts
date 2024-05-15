@@ -18,14 +18,20 @@ async function starterTest(){
     ));
     console.log(temp);;*/
   }
+  
+  const tally = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally");
+  
+  
   async function onOpen(e){
+    await menuSet();
     await recipeStarter();
   }
+  
+  
+  
   /*
     should delete the entire crafting tally list and start printing from blank cells whenever it starts being edited
   */
-  
-  const tally = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally");
   
   //prints the currently selected game to the "crafting tally" sheet so the user can select how many to craft
   async function recipeStarter() {//rename to sheetRange later
