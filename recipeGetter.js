@@ -24,7 +24,8 @@ async function reciGetTest(){
 async function recipeGetter() {//2d arr for debugging, add arg "range"
   //Range otherwise'
   const range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally")
-    .getRange("A2:E").getValues();
+    .getRange("A3:E").getValues();
+
 
   /*console.log("recipeGetter's 2d arr, then the pushes to result:");
   console.log(range);*/
@@ -60,6 +61,19 @@ async function recipeGetter() {//2d arr for debugging, add arg "range"
   var tallyRes = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("tally results");
   tallyRes.setActiveSelection("A1");
 
+
+  //if there's nothing inside the result[] to tally, just print an error-handling "No recipes to tally"
+  if(result.length == 0){
+    const errorMessage = [[`No recipes to tally,`]
+      ,[` please type some recipe numbers inside `]
+      ,[`"Crafting tally"s first/A column.`]];
+    const errorMessageRange = await rangeStarter("D", 2, errorMessage);
+    await rangeTransfer(tallyRes, errorMessageRange, errorMessage);
+    return ("Finished recipeGetter/crafting (ERROR)!");
+
+  }
+
+  //if there were entries to tally/convert
   //send data to setter for formatting
   const setterResult = await recipeTally(result)
     .then((e)=>recipeSetter(e));

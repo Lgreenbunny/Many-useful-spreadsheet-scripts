@@ -30,7 +30,8 @@ async function starterTest(){
   const tally = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally");
   async function recipeStarter() {//rename to sheetRange later
     //clear the entries in crafting tally
-    const tallyRangeStr = "B2:E";
+    const tallyRangeStr = "B3:E";
+    const tallyRangeChar = "B", tallyRangeRow = 3;
     tally.getRange(tallyRangeStr).clearContent();
     const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("stardew").getRange("A2:C").getValues();
     const ingredientArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("stardew").getRange("D2:Z").getValues();
@@ -47,7 +48,7 @@ async function starterTest(){
     console.log(resultArr)*/
   
     //for each filled recipe entry in the result, push/copy to tally's B2:D row
-    const coords = await rangeStarter("B", 2, resultArr);
+    const coords = await rangeStarter(tallyRangeChar, tallyRangeRow, resultArr);
     console.log("rangeStarter result while in recipeStarter:");
     console.log(coords);
     return await rangeTransfer(tally, coords, resultArr);
