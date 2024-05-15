@@ -67,6 +67,9 @@ async function recipeGetter() {//2d arr for debugging, add arg "range"
   //calculating dimensions before transferring
   const leftFinal = await rangeStarter("D", 2, setterResult.left);
   const rightFinal = await rangeStarter("H", 2, setterResult.right);
+  //[rowstart, colstart, rowEnd, colEnd]
+  //clear area 
+  tallyRes.getRange("D2:J").clearContent();
 
   //transferring
   await rangeTransfer(tallyRes, leftFinal, setterResult.left);
