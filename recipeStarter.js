@@ -18,23 +18,25 @@ async function starterTest(){
     ));
     console.log(temp);;*/
   }
-  
   async function onOpen(e){
     await recipeStarter();
   }
-  
-  /*later on, this should run on open and use Range objects to pull values from
-    posts all recipes of a given game into the crafting tally sheet (with yield given and notes, not ingredients)
+  /*
     should delete the entire crafting tally list and start printing from blank cells whenever it starts being edited
   */
+  
   const tally = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally");
+  
+  //prints the currently selected game to the "crafting tally" sheet so the user can select how many to craft
   async function recipeStarter() {//rename to sheetRange later
     //clear the entries in crafting tally
     const tallyRangeStr = "B3:E";
     const tallyRangeChar = "B", tallyRangeRow = 3;
     tally.getRange(tallyRangeStr).clearContent();
-    const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("stardew").getRange("A2:C").getValues();
-    const ingredientArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("stardew").getRange("D2:Z").getValues();
+  
+    const targetSheetName = tally.getRange("E1").getValue();
+    const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("A2:C").getValues();
+    const ingredientArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("D2:Z").getValues();
   
     //load all the first 3 columns of sheetArr into a condensed arr, with 1 cell from the condensed column
     //return a 2d column of condensed entries

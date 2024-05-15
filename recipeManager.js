@@ -19,7 +19,9 @@ async function managerTest(){
 
 async function recipeManager() {//2d arr for testing
   const recipeEntrySheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("recipe entry");
-  const destinationEntrySheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("stardew");
+  const targetSheetName = recipeEntrySheet.getRange("B1").getValue();
+
+  const destinationEntrySheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName);
   const arr = recipeEntrySheet.getRange("A3:Z").getValues();//starts at row 3
 
   const result = [];
@@ -40,7 +42,7 @@ async function recipeManager() {//2d arr for testing
   }
 
   
-  //after the loops are done, log the range into the game's sheet (stardew for now)
+  //after the loops are done, log the range into the game's sheet
   //find the last index that doesn't have an entry inside, then send the results to rangeStarter, then copy to the range starting from there
    var firstEmptyLine = 0;
    //looking at the first row of the destinationEntrySheet's values, check for blanks
