@@ -27,9 +27,9 @@ async function recipeManager() {//2d arr for testing
   const result = [];
   //for each row in recipeEntry
   for(var i = 0; i < arr.length; i++){
-    //log the first columns in the "name, yield, notes " format (type will be added later)
-    var name = 2, yieldVar = 3, notes = 0;
-    result.push([arr[i][name], arr[i][yieldVar], arr[i][notes]]);
+    //log the first columns in the "name, yield, notes " format 
+    var notes = 0, name = 1, typeVar = 2, yieldVar = 3;
+    result.push([arr[i][name], arr[i][typeVar], arr[i][yieldVar], arr[i][notes]]);
     
     //then loop through the list of ingredients, pushing each pair to the result row in a cell
     const ingredients = arr[i].slice(4);

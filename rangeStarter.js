@@ -32,7 +32,7 @@ function rangeStarter(startColChar, rowStart, arr) {
       }
     }
     console.log("arr after filling with blanks for uniformity...")
-    console.log(arr);
+    //console.log(arr);
 
 
     //https://stackoverflow.com/a/12504061

@@ -36,15 +36,15 @@ async function starterTest(){
   //prints the currently selected game to the "crafting tally" sheet so the user can select how many to craft
   async function recipeStarter() {//rename to sheetRange later
     //clear the entries in crafting tally
-    const tallyRangeStr = "B3:E";
+    const tallyRangeStr = "B3:F";
     const tallyRangeChar = "B", tallyRangeRow = 3;
     tally.getRange(tallyRangeStr).clearContent();
   
-    const targetSheetName = tally.getRange("E1").getValue();
-    const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("A2:C").getValues();
-    const ingredientArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("D2:Z").getValues();
+    const targetSheetName = tally.getRange("F1").getValue();
+    const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("A2:D").getValues();
+    const ingredientArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("E2:Z").getValues();
   
-    //load all the first 3 columns of sheetArr into a condensed arr, with 1 cell from the condensed column
+    //load all the first 4 columns of sheetArr into a condensed arr, with 1 cell from the condensed column
     //return a 2d column of condensed entries
     const condensedSheetCol = await condenseIngredient(ingredientArr);
     const resultArr = [];
@@ -62,7 +62,7 @@ async function starterTest(){
     return await rangeTransfer(tally, coords, resultArr);
   }
   
-  //condense the ingredients from D:Z then put in the 4th col
+  //condense the ingredients then put in the 4th col
   function condenseIngredient(rangeArr){
     return new Promise((resolve)=>{
       const result = [];

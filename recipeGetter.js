@@ -24,7 +24,7 @@ async function reciGetTest(){
 async function recipeGetter() {//2d arr for debugging, add arg "range"
   //Range otherwise'
   const range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally")
-    .getRange("A3:E").getValues();
+    .getRange("A3:F").getValues();
 
 
   /*console.log("recipeGetter's 2d arr, then the pushes to result:");
@@ -33,8 +33,9 @@ async function recipeGetter() {//2d arr for debugging, add arg "range"
   const result = [];
   //return new Promise( (res)=>{
   for(var i = 0; i < range.length; i++){
-    if(range[i][0] != "" && !isNaN(range[i][0])){//if there's a number in the first col
-      var nameCol = range[i][1], ingredientArr = range[i][4].split("|"); 
+    var recipeNum = range[i][0];
+    if(recipeNum != "" && !isNaN(recipeNum)){//if there's a number in the first col
+      var nameCol = range[i][1], ingredientArr = range[i][5].split("|"); 
       var temp = [];
       //format "temp" into the old recipeTally format, may change later on
 
@@ -44,7 +45,7 @@ async function recipeGetter() {//2d arr for debugging, add arg "range"
       //doesn't need to check for i each time this wayy
       if(ingredientArr.length != 0){
         //console
-        temp.push([nameCol, ...(ingredientArr[0].split(";")), Number(range[i][0])]);
+        temp.push([nameCol, ...(ingredientArr[0].split(";")), Number(recipeNum)]);
       }
 
       for(var j = 1; j < ingredientArr.length; j++)
