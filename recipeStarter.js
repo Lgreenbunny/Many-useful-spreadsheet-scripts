@@ -1,28 +1,36 @@
-const tally = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally");
-
-
 async function onOpen(e){
   SpreadsheetApp.getUi().createMenu('Calculator sidebar').addItem('Turn on', "sidebarManager").addToUi();
   await menuSet();
-  await recipeStarter();
+  await starterButton();
 }
-  
 
-
+//starts the script with the current spreadsheet if the launch came from that, other functions may call recipeStarter directly for testing.
+async function starterButton(){
+  await recipeStarter(SpreadsheetApp.getActiveSpreadsheet());
+}
 /*
   should delete the entire crafting tally list and start printing from blank cells whenever it starts being edited
 */
 
 //prints the currently selected game to the "crafting tally" sheet so the user can select how many to craft
-async function recipeStarter() {//rename to sheetRange later
+async function recipeStarter(theSpreadsheet) {//if not called from onOpen, the test script can plug in a spreadsheet ID if it has permission to edit it
+
+  var tally = theSpreadsheet.getSheetByName("crafting tally");
+
+  //[tallyRangeStr,	game dropdown/target sheet name,	targetSheetArr,	targetIngredientArr]////////////////
+  var refs = theSpreadsheet.getSheetByName("Refs").getRange("C3:F3").getValues()[0];
+  
+  
   //clear the entries in crafting tally
-  const tallyRangeStr = "B3:F";
-  const tallyRangeChar = "B", tallyRangeRow = 3;
+  const tallyRangeStr = refs[0];
+  const tallyRangeChar = tallyRangeStr.charAt(0), tallyRangeRow = tallyRangeStr.charAt(1);
   tally.getRange(tallyRangeStr).clearContent();
 
-  const targetSheetName = tally.getRange("F1").getValue();
-  const sheetArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("A2:D").getValues();
-  const ingredientArr = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(targetSheetName).getRange("E2:Z").getValues();
+  const targetSheetName = tally.getRange(refs[1]).getValue();
+  const sheetArr = theSpreadsheet.getSheetByName(targetSheetName)
+    .getRange(refs[2]).getValues();
+  const ingredientArr = theSpreadsheet.getSheetByName(targetSheetName)
+    .getRange(refs[3]).getValues();
 
   //load all the first 4 columns of sheetArr into a condensed arr, with 1 cell from the condensed column
   //return a 2d column of condensed entries

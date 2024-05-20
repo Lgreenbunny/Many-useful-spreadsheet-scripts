@@ -1,11 +1,13 @@
-async function craftTest() {//launches one of the functions below (in the future)
+/*async function craftTest() {//launches one of the functions below (in the future)
     return
-}
+}*/
   
 
+async function reciStarterTest(){
+  return await recipeStarter(SpreadsheetApp.openById("1dXG0ctJB3gTMjgVyaM49n2YuwEpcRwxIkHdGBpiy6Es"));
+}
 
 
-async function starterTest(){
 /*  return await recipeStarter(//stardew args
     [
         ["test1", "3", "egg", "fish; 3", "egg; 1", "tree; 2"],
@@ -23,8 +25,7 @@ async function starterTest(){
         ["fish; 6", "egg; 4", "tree; 5"]
     ]    
     ));
-    console.log(temp);;*/
-}
+    console.log(temp);;
 
 async function reciGetTest(){//the whole crafting part
     /*const tested = await recipeGetter(//make sure you change recipeGetter's arg handling to A2:E
@@ -43,7 +44,7 @@ async function reciGetTest(){//the whole crafting part
     console.log("left then right since the ${} embedded strings messed up the array?");
     console.log(formattedResult.left);
     console.log(formattedResult.right);
-    */
+    
     //then send it to rangeTransfer in the real output
 }
 
@@ -67,7 +68,7 @@ function testTally(){
             ["mana potion", "lesser mana potion", "2", 20],
             ["", "glowing mushroom", "1", ""]
         ]
-        */
+        
 }
 
 async function managerTest(){
@@ -82,14 +83,14 @@ async function managerTest(){
         ["foraging +2, def +2, 8min", "", "autumn's bounty", "1", "yam", "1", "pumpkin", "1", "", ""],
         ["desert trader", "food, shop", "spicy eel", "1", "ruby", "1", "", "", "", ""],
         ["", "mine, shop", "mega bomb", "1", "iridium ore", "5", "", "", "", ""],
-        ["", "mine, shop", "bomb", "1", "quartz", "5", "", "", "", ""],*/
+        ["", "mine, shop", "bomb", "1", "quartz", "5", "", "", "", ""],
         ["", "plant, shop", "hay", "3", "omni geode", "1", "", "", "", ""]
       ]
     );
     console.log(result);
   }
   
-/**/async function starterTest(){
+async function rangeStarterTest(){
     var test = await rangeStarter("a", 2, 
     [
       ["atk +3, 5min", "",  ""],
@@ -101,4 +102,4 @@ async function managerTest(){
 }
 
 
-    
+    */
