@@ -1,22 +1,3 @@
-async function managerTest(){
-  //from the stardew example sheett
-  const result = await recipeManager(
-    [
-      ["atk +3, 5min", "", "roots platter", "1", "cave carrot", "1", "winter root", "1", "", ""],
-      ["foraging +3, 5min", "", "survival burger", "1", "bread", "1", "cave carrot", "1", "eggplant", "1"],/*
-      ["mining +3, magnetism +32, 5min", "", "miner's treat", "1", "cave carrot", "2", "sugar", "1", "milk", "1"],
-      ["mining +2, 3.5min", "", "cranberry sauce", "1", "cranberries", "1", "sugar", "1", "", ""],
-      ["foraging +2, 11min", "", "pancakes", "1", "wheat flour", "1", "egg", "1", "", ""],
-      ["foraging +2, def +2, 8min", "", "autumn's bounty", "1", "yam", "1", "pumpkin", "1", "", ""],
-      ["desert trader", "food, shop", "spicy eel", "1", "ruby", "1", "", "", "", ""],
-      ["", "mine, shop", "mega bomb", "1", "iridium ore", "5", "", "", "", ""],
-      ["", "mine, shop", "bomb", "1", "quartz", "5", "", "", "", ""],*/
-      ["", "plant, shop", "hay", "3", "omni geode", "1", "", "", "", ""]
-    ]
-  );
-  console.log(result);
-}
-
 async function recipeManager() {//2d arr for testing
   const recipeEntrySheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("recipe entry");
   const targetSheetName = recipeEntrySheet.getRange("B1").getValue();

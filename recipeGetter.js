@@ -1,26 +1,7 @@
 /*
-gets recipes listed inside the 
+  gets recipes and crafts them with the help of recipeTall yand recipeSetter
  */
-async function reciGetTest(){
-  /*const tested = await recipeGetter(//make sure you change recipeGetter's arg handling to A2:E
-  [
-    ["", "test1", "3", "egg", "fish; 3|egg; 1|tree; 2"],
-    ["2", "test2", "3", "egg", "fish; 4|egg; 2"],
-    ["", "test3", "3", "egg", "fish; 5|egg; 3|tree; 4"],
-    ["18", "test4", "3", "egg", "fish; 6|egg; 4|test2; 5"],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""]
-  ]);
-  console.log(tested);
-  const sentTally = await recipeTally(tested);
-  console.log(sentTally);
-  const formattedResult = await formatTally(sentTally);
-  console.log("left then right since the ${} embedded strings messed up the array?");
-  console.log(formattedResult.left);
-  console.log(formattedResult.right);
-  */
-  //then send it to rangeTransfer in the real output
-}
+
 async function recipeGetter() {//2d arr for debugging, add arg "range"
   //Range otherwise'
   const range = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("crafting tally")

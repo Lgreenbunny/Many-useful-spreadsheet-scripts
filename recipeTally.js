@@ -1,25 +1,3 @@
-function testTally(){
-  recipeTally(
-    [
-      ["abeemination", "honey block", "5", ""],
-      ["", "stinger", "1", ""],
-      ["", "hive", "5", ""],
-      ["", "bottled honey", "1", ""],
-      ["non abeemonation", "abeemination", "2", "30"],
-      ["", "blinkroot", "3", ""]
-    ]
-  );
-    /*
-      [
-        ["healing potion", "mushroom", "2", 20],
-        ["", "gel", "4", ""],
-        ["", "bottle", "4", ""],
-        ["", "glowing mushroom", "1", ""],
-        ["mana potion", "lesser mana potion", "2", 20],
-        ["", "glowing mushroom", "1", ""]
-      ]
-    */
-}
 
 /*return value/global map documentation:
   //recipeMap: 
