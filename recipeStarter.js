@@ -1,5 +1,5 @@
 async function onOpen(e){
-  SpreadsheetApp.getUi().createMenu('Calculator sidebar').addItem('Turn on', "sidebarManager").addToUi();
+  //SpreadsheetApp.getUi().createMenu('Calculator sidebar').addItem('Turn on', "sidebarManager").addToUi();
   await menuSet();
   await starterButton();
 }

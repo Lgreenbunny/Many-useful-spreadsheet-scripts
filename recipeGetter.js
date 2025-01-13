@@ -49,6 +49,7 @@ async function recipeGetter() {//2d arr for debugging, add arg "range"
     const errorMessage = [[`No recipes to tally,`]
       ,[` please type some recipe numbers inside `]
       ,[`"Crafting tally"s first/A column.`]];
+    tallyRes.getRange("D2:I").clearContent();
     const errorMessageRange = await rangeStarter("D", 2, errorMessage);
     await rangeTransfer(tallyRes, errorMessageRange, errorMessage);
     return ("Finished recipeGetter/crafting (ERROR)!");

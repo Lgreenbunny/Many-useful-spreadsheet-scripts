@@ -1,10 +1,11 @@
+const sheetOfSpread = "1dXG0ctJB3gTMjgVyaM49n2YuwEpcRwxIkHdGBpiy6Es";
 /*async function craftTest() {//launches one of the functions below (in the future)
     return
 }*/
   
 
 async function reciStarterTest(){
-  return await recipeStarter(SpreadsheetApp.openById("1dXG0ctJB3gTMjgVyaM49n2YuwEpcRwxIkHdGBpiy6Es"));
+  return await recipeStarter(SpreadsheetApp.openById(sheetOfSpread));
 }
 
 
