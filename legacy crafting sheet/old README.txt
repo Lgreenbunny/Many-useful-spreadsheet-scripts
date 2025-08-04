@@ -5,8 +5,12 @@ It works for computer browsers but not mobile at the moment.
  
 Using sidebars and apps script, these files help the user manage multiple game's crafting recipes at once.
 
-## Capablilities
-(TBA)
-
-# more
-(Also TBA, I'll also make better names for some of these programs I promise) (probably)
+# Capablilities
+At the moment, it can:
+- Accept new recipes,
+- Present said recipes in a list
+  - Recipes with a number written to the left of its row will be crafted when the script's launched.
+- Be launched to craft al items with a recipe number written next to
+- Show all materials needed to craft said recipes
+- Display the yield of recipes
+- And more to come soon!
