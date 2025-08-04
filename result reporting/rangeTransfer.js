@@ -17,16 +17,3 @@ function rangeTransfer(goalSheet, coords, arr) {
     resolve(`Successfully copied range to sheet ${goalSheet.getSheetName()}.`);
   });
 }
-    /*const result = [];
-    for(var i = 0; i < arr.length; i++){
-      if(arr[i][0] != ""){
-        result.push(arr[i]);//if i put in "length", it'll stop at the actual end index
-      }
-    }*/
-    /*
-    goalSheet.getRange(`${startingRangeStr}${result.length+1}`);
-    console.log(`result:
-    ${result}
-    range:
-    ${startingRangeStr}${result.length+1}`);
-    */

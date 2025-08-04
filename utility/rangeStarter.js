@@ -1,13 +1,3 @@
-/**/async function starterTest(){
-  var test = await rangeStarter("a", 2, 
-    [
-      ["atk +3, 5min", "",  ""],
-      ["", "mine, shop", "bomb", "1", "quartz", "5", ""],
-      ["", "plant, shop", "hay", "3", "omni geode", "1", "", "", "", ""]//10 cols total, 3 rows total
-    ]  //from a2, should be a2:j4 (row 2 col 1):(row 4 col 10)
-  );
-  console.log(test);
-}
 
 //finds the column bounds for a given array & a starting cell, from A-Z only
 function rangeStarter(startColChar, rowStart, arr) {
@@ -32,7 +22,7 @@ function rangeStarter(startColChar, rowStart, arr) {
       }
     }
     console.log("arr after filling with blanks for uniformity...")
-    console.log(arr);
+    //console.log(arr);
 
 
     //https://stackoverflow.com/a/12504061
