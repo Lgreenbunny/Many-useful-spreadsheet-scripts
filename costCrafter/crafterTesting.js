@@ -1,16 +1,20 @@
 function craftyTest(){
-	const spreadSheetMistria = SpreadsheetApp.openById("1NMgROzO0hep5Ek80KJGGWOTvZYdKEBdT5VKj9znpvx4");
-	const recipeSheet = spreadSheetMistria.getSheetByName("raw FOOD recipes");
-	const ingredientSheet = spreadSheetMistria.getSheetByName("FOOD ingredients");
-  //grilled cheese recipe E59, bread 8, both ranges for the ingredient sheet 
+	const spreadSheetBase = SpreadsheetApp.openById("1PTUNqPzjb5RGqwNYxr6b94SCrZfSFKgSNVujx_B77c0");
+	const recipeSearchSheet = spreadSheetBase.getSheetByName("search and results");
+	const ingredientSheet = spreadSheetBase.getSheetByName("ingredients");
+
 	costCrafter(
-		recipeSheet.getRange("E8").getValue(), 
+		recipeSearchSheet.getRange("A4").getValue(), 
+
 		ingredientSheet.getRange(
-      ingredientSheet.getRange("K2").getValues()).getValues(), 
+      ingredientSheet.getRange("Y1").getValues()).getValues(), 
+
 		ingredientSheet.getRange(
-      ingredientSheet.getRange("K3").getValues()).getValues(), 
-		10
-    //,5
+      ingredientSheet.getRange("W1").getValues()).getValues(), 
+
+		10,
+
+    recipeSearchSheet.getRange("B4").getValue()
 	);
 }
-//costCrafter(recipeCell, ingredientList, recipeList, limit){
+//costCrafter(recipeCell, ingredientList, recipeList, limit, multiplier){
