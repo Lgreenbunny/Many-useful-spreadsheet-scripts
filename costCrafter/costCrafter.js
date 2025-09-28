@@ -77,7 +77,7 @@ async function ingredientSearcher(obj, ingredientList, recipeList, limit, markip
 		if the ingredient has a TRUE in the craftable 3rd column/2nd index, recursively search for the ingredients that make up
 		said ingredient, up to a limit (decreases each time, when it hits 0 there's no more recursion
 	*/
-	if(ingredientInfo[2]){
+	if(ingredientInfo[3]){
 		//find the recipe cell using the current object's name, there's a sorted version in the FOOD ingredients sheet
 		//then it'll return the 3 cells involved, and we just need the 3rd one (recipe cell) to do another loop of recursion
 
@@ -109,8 +109,7 @@ function theBinary(key, arr){
 		
 		//makes the new index in the middle of the 2 bounds each time
 		//if it's at 2 and 9, should take the point closest to 2+(9-2)/2, top of the range + the distance to the middle of the 2
-		for(index; index > topBound && index < bottomBound; 
-			index = Math.floor((topBound+(bottomBound - topBound)/2))){
+		for(index; index >= topBound && index <= bottomBound; index = Math.floor((topBound+(bottomBound - topBound)/2))){
 				
 			//compare the key to the current index
 			var test = key.localeCompare(arr[index][0]);
@@ -118,11 +117,29 @@ function theBinary(key, arr){
 			//if it's a matchhhhh break the loop and return the row	
 			if(test == 0)
 				break;
-			//if the key's lower/earlier than the index, reduce bottom bound, otherwise increase top bound
-			if(test<0)
+
+			//if the key's lower/earlier than the index, reduce bottom bound 
+			if(test<0){
 				bottomBound = index;
-			else 
+
+        if(key.localeCompare(arr[topBound][0])== 0){//and inspect the top bound
+          index = topBound;
+          break;
+        }
+        else
+          topBound++;
+      }
+
+			else if(test>0){//vice versa
 				topBound = index;
+
+        if(key.localeCompare(arr[bottomBound][0])== 0){//and inspect the top bound
+          index = bottomBound;
+          break;
+        }
+        else
+          bottomBound--;
+      }
 		}
 	
 		resolve(arr[index]);
