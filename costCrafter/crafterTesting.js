@@ -7,10 +7,10 @@ function craftyTest(){
 		recipeSearchSheet.getRange("A4").getValue(), 
 
 		ingredientSheet.getRange(
-      ingredientSheet.getRange("Y1").getValues()).getValues(), 
+      ingredientSheet.getRange("Z1").getValues()).getValues(), 
 
 		ingredientSheet.getRange(
-      ingredientSheet.getRange("W1").getValues()).getValues(), 
+      ingredientSheet.getRange("X1").getValues()).getValues(), 
 
 		10,
 

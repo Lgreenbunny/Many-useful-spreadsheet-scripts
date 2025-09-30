@@ -26,20 +26,20 @@ async function costCrafter(recipeCell, ingredientList, recipeList, limit){
 		var allWords = e.split(" ");
 		var firstNumTest = Number.parseInt(allWords[0], 10);
 
-    //for each ingredient, search through the sorted list of ingredients and get the cost with ingredientSearcher(name)
-    //this function will be called back recursively to calculate a different recipe
-    //multipliers and such are multiplied here per ingredient as well, and are passed on to the next function
-    var tempObj = 0;
+		//for each ingredient, search through the sorted list of ingredients and get the cost with ingredientSearcher(name)
+		//this function will be called back recursively to calculate a different recipe
+		//multipliers and such are multiplied here per ingredient as well, and are passed on to the next function
+		var tempObj = 0;
 		if(Number.isNaN(firstNumTest)){
-      tempObj = {amount: markiplier, name: e}
-      ingredients.push(tempObj);
-    }
-    else{
-      tempObj = {amount: firstNumTest*markiplier, name: allWords.slice(1).join(" ")}
-      ingredients.push(tempObj);
-    }
-    
-    prom.push(ingredientSearcher(tempObj, ingredientList, recipeList, limit, tempObj.amount));
+		  tempObj = {amount: markiplier, name: e}
+		  ingredients.push(tempObj);
+		}
+		else{
+		  tempObj = {amount: firstNumTest*markiplier, name: allWords.slice(1).join(" ")}
+		  ingredients.push(tempObj);
+		}
+		
+		prom.push(ingredientSearcher(tempObj, ingredientList, recipeList, limit, tempObj.amount));
 	}
 	
 	/*const prom = ingredients.map((e)=>ingredientSearcher(
@@ -70,25 +70,29 @@ async function costCrafter(recipeCell, ingredientList, recipeList, limit){
 async function ingredientSearcher(obj, ingredientList, recipeList, limit, markiplier){
 	const result = [0, "("];//return [cost, craftTree]
 	
-	//[name, cost, craftable] return
+	//[name, sells for, bought for, craftable], returns ingredient row info
 	const ingredientInfo = await theBinary(obj.name, ingredientList);
 		
-	/*
-		if the ingredient has a TRUE in the craftable 3rd column/2nd index, recursively search for the ingredients that make up
-		said ingredient, up to a limit (decreases each time, when it hits 0 there's no more recursion
-	*/
+	//craftable recipe for this ingredient found, recurses up to a limit
+	//finds the recipe cell and yield using the current object's name before more recursion
+	
 	if(ingredientInfo[3]){
-		//find the recipe cell using the current object's name, there's a sorted version in the FOOD ingredients sheet
-		//then it'll return the 3 cells involved, and we just need the 3rd one (recipe cell) to do another loop of recursion
-
-    //[[name, sells for, ingredients]] as usual, sends the list of ingredients to be sorted and waits for the result     
-    const tempIngredients = (await theBinary(obj.name, recipeList))[2];
-
+		//[[name, sells for, ingredients, yield]], the spiral of code calling commences here     
+		const retrievedRecipe = await theBinary(obj.name, recipeList);
+		const recipeIngredients = retrievedRecipe[2];
+		const recipeYield = (retrievedRecipe[3]? Number(retrievedRecipe[3]) : 1);//blank cell "" is falsy
+		
+		//computing the new multiplier... set the multiplier to the highest factor of the yield as needed
+		//like if the yield's 4 for the recipe buy you need 14, would need 4 of the recipe
+		//ceiling(14/4) = ceiling(3.5) = 4
+		var adjustedMarkiplier = Math.ceil(markiplier/recipeYield);
+			
+		// will return [cost, craftTree] as well
 		const recursed = await costCrafter(
-			tempIngredients, ingredientList, recipeList, limit-1, markiplier); // will return [cost, craftTree] as well
+			recipeIngredients, ingredientList, recipeList, limit-1, adjustedMarkiplier); 
 			
 		result[0] += recursed[0];//adding up older results
-		result[1] = result[1].concat(obj.amount, " x ", obj.name, " ", recursed[1], ")");
+		result[1] = result[1].concat(recipeYield*adjustedMarkiplier, " x ", obj.name, " ", recursed[1], ")");
 	}
 	else{
 		result[0] += obj.amount * ingredientInfo[1];//true cost at the end of the recursion tree
