@@ -45,10 +45,6 @@ async function costCrafter(recipeCell, ingredientList, recipeList, recipeYield, 
 		
 		prom.push(ingredientSearcher(tempObj, ingredientList, recipeList, limit, tempObj.amount));
 	}
-	
-	/*const prom = ingredients.map((e)=>ingredientSearcher(
-    e, ingredientList, recipeList, limit, markiplier
-  ));*/
 
 	return await Promise.all(prom).then((arr)=>{
 		//total all the costs in the right format, with the crafting trees
@@ -98,8 +94,15 @@ async function ingredientSearcher(obj, ingredientList, recipeList, limit, markip
 		result[0] += recursed[0];//adding up older results
 		result[1] = result[1].concat(recipeYield*adjustedMarkiplier, " x ", obj.name, " ", recursed[1], ")");
 	}
+
+  //base ingredients are sold or bought for if it's typed in
 	else{
-		result[0] += obj.amount * ingredientInfo[1];//true cost at the end of the recursion tree
+		result[0] -= obj.amount * ingredientInfo[2];//"bought for" ingredients
+    /*
+      potentially put the ingredient "sells for" here, to see if it's worth crafting for the recipe, 
+      but i'd want to check every ingredient's sale price down the line for that to see if any sell for more than the recipe
+      so I'd put it before both areas, or make a function for that area before the conditions
+    */
 		result[1] = result[1].concat(obj.amount, " x ", ingredientInfo[0], ")");
 	}
 	
