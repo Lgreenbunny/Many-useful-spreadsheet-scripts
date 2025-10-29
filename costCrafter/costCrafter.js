@@ -9,10 +9,14 @@
 	the ingredientList'range should end at the "zzzEND" cell for now, but later on you can make a flexible range or something
 */
 
-async function costCrafter(recipeCell, ingredientList, recipeList, limit){
+async function costCrafter(recipeCell, ingredientList, recipeList, recipeYield, limit){
 	const temp = recipeCell.split(", ");
 	const ingredients = [];
-  var markiplier = (arguments.length == 5? arguments[4] : 1);
+
+  //if nothing there or 0, falsy, logical OR assignment, was going to use ||= but compiler didnt like
+  recipeYield = (recipeYield ? recipeYield : 1); 
+  var markiplier = (arguments.length == 6? 
+    (Math.ceil(arguments[5]/recipeYield)) : 1);
 	const prom = [];
 
 	/*

@@ -12,9 +12,14 @@ function craftyTest(){
 		ingredientSheet.getRange(
       ingredientSheet.getRange("X1").getValues()).getValues(), 
 
+		recipeSearchSheet.getRange("B4").getValue(), 
+
 		10,
 
-    recipeSearchSheet.getRange("B4").getValue()
+    recipeSearchSheet.getRange("C4").getValue()
 	);
 }
-//costCrafter(recipeCell, ingredientList, recipeList, limit, multiplier){
+/*
+  costCrafter(recipeCell, ingredientList, recipeList, 
+  recipeYield, limit, [multiplier])
+ */
