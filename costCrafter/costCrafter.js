@@ -89,7 +89,7 @@ async function ingredientSearcher(obj, ingredientList, recipeList, limit, markip
 			
 		// will return [cost, craftTree] as well
 		const recursed = await costCrafter(
-			recipeIngredients, ingredientList, recipeList, limit-1, adjustedMarkiplier); 
+			recipeIngredients, ingredientList, recipeList, recipeYield, limit-1, adjustedMarkiplier); 
 			
 		result[0] += recursed[0];//adding up older results
 		result[1] = result[1].concat(recipeYield*adjustedMarkiplier, " x ", obj.name, " ", recursed[1], ")");
