@@ -8,17 +8,21 @@
 	
 	the ingredientList'range should end at the "zzzEND" cell for now, but later on you can make a flexible range or something
 */
+var recursionSteps = 0;
 
 async function costCrafter(recipeCell, ingredientList, recipeList, recipeYield, limit){
 	const temp = recipeCell.split(", ");
 	const ingredients = [];
 
-  //if nothing there or 0, falsy, logical OR assignment, was going to use ||= but compiler didnt like
+  //if nothing there or 0, falsy, logical OR assignment, was going to use ||= but compiler didnt like smh
   recipeYield = (recipeYield ? recipeYield : 1); 
-  var markiplier = (arguments.length == 6? 
-    (Math.ceil(arguments[5]/recipeYield)) : 1);
+  var markiplier = 0;
+  if(recursionSteps == 0)
+    markiplier = (arguments.length == 6? Math.ceil(arguments[5]/recipeYield) : 1);
+  else
+    markiplier = arguments[5];
 	const prom = [];
-
+  recursionSteps++;
 	/*
 		breaks down the ingredients inside the recipe cell into the form
 		[{amount, name}, {amount, name}, ...] 
@@ -42,7 +46,7 @@ async function costCrafter(recipeCell, ingredientList, recipeList, recipeYield, 
 		  tempObj = {amount: firstNumTest*markiplier, name: allWords.slice(1).join(" ")}
 		  ingredients.push(tempObj);
 		}
-		
+
 		prom.push(ingredientSearcher(tempObj, ingredientList, recipeList, limit, tempObj.amount));
 	}
 
@@ -82,9 +86,19 @@ async function ingredientSearcher(obj, ingredientList, recipeList, limit, markip
 		const recipeIngredients = retrievedRecipe[2];
 		const recipeYield = (retrievedRecipe[3]? Number(retrievedRecipe[3]) : 1);//blank cell "" is falsy
 		
-		//computing the new multiplier... set the multiplier to the highest factor of the yield as needed
-		//like if the yield's 4 for the recipe buy you need 14, would need 4 of the recipe
-		//ceiling(14/4) = ceiling(3.5) = 4
+		/*computing the new multiplier... set the multiplier to the highest factor of the yield as needed
+      like if the yield's 4 for the recipe but you need 14 of the output, would need 4 of the recipe (16)
+		  ceiling(14/4) = ceiling(3.5) = 4
+      4 * recipeyield = 16
+    */
+    /*or another way of looking at it for yields:
+      the initial markiplier (objects needed) is at 14 (expected)
+      the recipe yields 4 sticks every 2 planks
+      need 16 sticks or 8 planks
+      14/4 = 3.5, ceiling would be 4
+      adjust the new recursive loop by the yield (to multiply the min number of planks)
+      the current loop uses the min yield needed (4*4yield)
+    */
 		var adjustedMarkiplier = Math.ceil(markiplier/recipeYield);
 			
 		// will return [cost, craftTree] as well
@@ -93,6 +107,7 @@ async function ingredientSearcher(obj, ingredientList, recipeList, limit, markip
 			
 		result[0] += recursed[0];//adding up older results
 		result[1] = result[1].concat(recipeYield*adjustedMarkiplier, " x ", obj.name, " ", recursed[1], ")");
+    
 	}
 
   //base ingredients are sold or bought for if it's typed in
